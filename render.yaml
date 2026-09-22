@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: playirl-api
+    runtime: python
+    plan: starter
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    disk:
+      name: playirl-data
+      mountPath: /opt/render/project/src/backend/data
+      sizeGB: 1
