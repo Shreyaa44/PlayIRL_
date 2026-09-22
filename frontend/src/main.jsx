@@ -19,7 +19,10 @@ async function api(path, options = {}) {
     headers: { "Content-Type": "application/json" },
     ...options,
   });
-  const data = await res.json();
+  const contentType = res.headers.get("content-type") || "";
+  const data = contentType.includes("application/json")
+    ? await res.json()
+    : { detail: `The API returned an unexpected response (${res.status}). Please try again later.` };
   if (!res.ok) throw new Error(data.detail || "Something went wrong");
   return data;
 }
