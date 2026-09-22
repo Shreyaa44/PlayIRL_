@@ -1,0 +1,224 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Aalu",
+      "email": "demo@playirl.local",
+      "plan": "free",
+      "points": 1250,
+      "password_hash": "0ead2060b65992dca4769af601a1b3a35ef38cfad2c2c465bb160ea764157c5d",
+      "weekly_points": 0,
+      "week_key": "2026-W39"
+    },
+    {
+      "id": 2,
+      "name": "Sakshi",
+      "email": "aaludaparatha7@gmail.com",
+      "password_hash": "fc1a8fc81824ab1600eda9dd118c6550b281ed3eedb2f9254df1f39c7d57caae",
+      "plan": "free",
+      "points": 100,
+      "weekly_points": 50,
+      "week_key": "2026-W39"
+    },
+    {
+      "id": 3,
+      "name": "Scout",
+      "email": "domain@gmail.com",
+      "password_hash": "3608e4bd0e693177369e17f48cdf750eb962b86aaac1bf6b50c7a46d52f7d94b",
+      "plan": "duo",
+      "points": 200,
+      "weekly_points": 150,
+      "week_key": "2026-W39"
+    },
+    {
+      "id": 4,
+      "name": "BOT",
+      "email": "shreyaa2130@gmail.com",
+      "password_hash": "20f5691fd825a070a6c88d303a7a24087d07c3bc295fded4b6334e4929646c43",
+      "plan": "free",
+      "points": 100,
+      "weekly_points": 100,
+      "week_key": "2026-W39"
+    },
+    {
+      "id": 5,
+      "name": "Rahul",
+      "email": "aalu@gmail.com",
+      "password_hash": "69838bb0bce12214a9ddf4761902ad715533a781d769be999cf4d32d851a3d54",
+      "plan": "free",
+      "points": 0,
+      "weekly_points": 0,
+      "week_key": "2026-W39"
+    },
+    {
+      "id": 6,
+      "name": "Shraddha",
+      "email": "playirl@gmail.com",
+      "password_hash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+      "plan": "squad",
+      "points": 50,
+      "weekly_points": 50,
+      "week_key": "2026-W39"
+    },
+    {
+      "id": 7,
+      "name": "Nikita",
+      "email": "playirldo@gmail.com",
+      "password_hash": "ea3fed45388777ce0b7dda14d9fccacad07f6aadaf9a199efb7a022b2b84fabf",
+      "plan": "free",
+      "points": 0,
+      "weekly_points": 0,
+      "week_key": "2026-W39"
+    }
+  ],
+  "bookings": [
+    {
+      "id": 1,
+      "user_id": 2,
+      "cafe_id": 2,
+      "cafe_name": "The Gaming Lounge",
+      "game": "Fortnite",
+      "booking_date": "2026-09-21",
+      "booking_time": "18:00",
+      "seats": 1,
+      "seat_numbers": [
+        19
+      ],
+      "amount": 150,
+      "status": "Confirmed",
+      "payment": "DEMO_PAYMENT",
+      "qr_token": "Z7UWit0ZzZEhAK66",
+      "created_at": "2026-09-21T17:53:00"
+    },
+    {
+      "id": 2,
+      "user_id": 3,
+      "cafe_id": 3,
+      "cafe_name": "Circle Gaming Arena",
+      "game": "Minecraft",
+      "booking_date": "2026-09-21",
+      "booking_time": "18:00",
+      "seats": 1,
+      "seat_numbers": [
+        4
+      ],
+      "amount": 220,
+      "status": "Cancelled",
+      "payment": "DEMO_PAYMENT",
+      "qr_token": "5OTxaqHsrv96UjmJ",
+      "created_at": "2026-09-21T20:36:24",
+      "cancellation_charge": 100,
+      "cancelled_at": "2026-09-21T21:49:13"
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "cafe_id": 3,
+      "cafe_name": "Circle Gaming Arena",
+      "game": "Cyberpunk 2077",
+      "booking_date": "2026-09-21",
+      "booking_time": "18:00",
+      "seats": 3,
+      "seat_numbers": [
+        19,
+        20,
+        17
+      ],
+      "booking_type": "squad",
+      "duo_players": [],
+      "food": false,
+      "beverage": false,
+      "discount_percent": 0,
+      "discount_amount": 0,
+      "food_cost": 0,
+      "beverage_cost": 0,
+      "extra_minutes": 15,
+      "amount": 660,
+      "status": "Confirmed",
+      "payment": "DEMO_PAYMENT",
+      "qr_token": "ACUCRHeWWti8Uj9B",
+      "created_at": "2026-09-21T22:04:17"
+    },
+    {
+      "id": 4,
+      "user_id": 4,
+      "cafe_id": 6,
+      "cafe_name": "Arcade District",
+      "game": "Valorant",
+      "booking_date": "2026-09-21",
+      "booking_time": "18:00",
+      "seats": 2,
+      "seat_numbers": [
+        13,
+        14
+      ],
+      "booking_type": "solo",
+      "duo_players": [],
+      "food": false,
+      "beverage": false,
+      "discount_percent": 0,
+      "discount_amount": 0,
+      "food_cost": 0,
+      "beverage_cost": 0,
+      "extra_minutes": 0,
+      "amount": 320,
+      "status": "Confirmed",
+      "payment": "DEMO_PAYMENT",
+      "qr_token": "zgnY4K7fWFIFc_GR",
+      "created_at": "2026-09-21T22:32:20"
+    },
+    {
+      "id": 5,
+      "user_id": 6,
+      "cafe_id": 2,
+      "cafe_name": "The Gaming Lounge",
+      "game": "Valorant",
+      "booking_date": "2026-09-21",
+      "booking_time": "18:00",
+      "seats": 1,
+      "seat_numbers": [
+        6
+      ],
+      "booking_type": "solo",
+      "duo_players": [],
+      "food": false,
+      "beverage": false,
+      "discount_percent": 0,
+      "discount_amount": 0,
+      "food_cost": 0,
+      "beverage_cost": 0,
+      "extra_minutes": 15,
+      "amount": 150,
+      "status": "Confirmed",
+      "payment": "DEMO_PAYMENT",
+      "qr_token": "g5zCxP9RmYN7VVFg",
+      "created_at": "2026-09-21T23:29:06"
+    }
+  ],
+  "tournament_reservations": [
+    {
+      "id": 1,
+      "user_id": 3,
+      "user_name": "Scout",
+      "tournament_id": 4,
+      "tournament_title": "BGMI Esports",
+      "game": "BGMI",
+      "date": "Oct 30, 2026",
+      "seats": 1,
+      "status": "Reserved",
+      "created_at": "2026-09-22T16:46:36"
+    },
+    {
+      "id": 2,
+      "user_id": 7,
+      "user_name": "Nikita",
+      "tournament_id": 5,
+      "tournament_title": "Among Us Night",
+      "game": "Among Us",
+      "date": "Nov 8, 2026",
+      "seats": 1,
+      "status": "Reserved",
+      "created_at": "2026-09-22T16:51:58"
+    }
+  ]
+}
