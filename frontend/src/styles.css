@@ -1144,3 +1144,26 @@ body{background:#07080b;color:var(--ink);font-family:Inter,ui-sans-serif,system-
   border-color: #8b5cff;
   box-shadow: 0 0 0 2px rgba(139, 92, 255, 0.18);
 }
+
+/* Mobile navigation and persistent high-contrast theme controls. */
+.mobile-auth-links { display: none; }
+.high-contrast body,
+.high-contrast .auth-page,
+.high-contrast .noxen-hero { background: var(--bg); color: var(--text); }
+.high-contrast .topbar,
+.high-contrast .main-nav,
+.high-contrast .auth-panel,
+.high-contrast .panel,
+.high-contrast .cafe-card,
+.high-contrast .feature-card,
+.high-contrast .filter-bar,
+.high-contrast .booking-card { background: var(--surface); border-color: var(--line); }
+.high-contrast .auth-form-wrap input,
+.high-contrast .form-grid input,
+.high-contrast .form-grid select { background: var(--surface-2); color: var(--text); border-color: var(--line); }
+
+@media (max-width: 720px) {
+  .mobile-auth-links { display: grid; gap: 4px; margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .mobile-auth-links a { display: flex; align-items: center; gap: 8px; color: var(--text); padding: 12px 13px; border: 1px solid var(--line); border-radius: 10px; }
+  .mobile-auth-links a:last-child { color: #07080b; background: var(--accent); border-color: var(--accent); }
+}

@@ -30,12 +30,13 @@ function getSavedUser() {
 }
 
 function App() {
-  const [contrast, setContrast] = useState(false);
+  const [contrast, setContrast] = useState(() => localStorage.getItem("playirl_contrast") === "true");
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(getSavedUser);
 
   useEffect(() => {
     document.documentElement.classList.toggle("high-contrast", contrast);
+    localStorage.setItem("playirl_contrast", String(contrast));
   }, [contrast]);
 
   function loginUser(nextUser) {
@@ -105,10 +106,14 @@ function Header({ menuOpen, setMenuOpen, contrast, setContrast, user, logout }) 
         <NavLink to="/leaderboard">Leaderboard</NavLink>
         <NavLink to="/premium">Premium</NavLink>
         {user && <NavLink to="/dashboard">Dashboard</NavLink>}
+        {!user && <div className="mobile-auth-links">
+          <Link to="/login" onClick={() => setMenuOpen(false)}><LogIn size={15} /> Log in</Link>
+          <Link to="/signup" onClick={() => setMenuOpen(false)}><UserPlus size={15} /> Sign up</Link>
+        </div>}
       </nav>
 
       <div className="header-actions">
-        <button className="icon-btn" onClick={() => setContrast(!contrast)} aria-label="Toggle high contrast">
+        <button className="icon-btn" onClick={() => setContrast(!contrast)} aria-label="Toggle high contrast" aria-pressed={contrast} title={contrast ? "Turn off high contrast" : "Turn on high contrast"}>
           <Eye size={19} />
         </button>
         {user ? (
@@ -598,8 +603,9 @@ function Auth({ mode, onAuth }) {
 
             <label>
   {isLogin ? "Username or Email" : "Email"}
+
   <input
-    type="email"
+    type={isLogin ? "text" : "email"}
     value={form.email}
     onChange={e =>
       setForm({
@@ -607,7 +613,11 @@ function Auth({ mode, onAuth }) {
         email: e.target.value
       })
     }
-    placeholder={isLogin ? "Username or email" : "Enter your email"}
+    placeholder={
+      isLogin
+        ? "Username or email"
+        : "Enter your email"
+    }
     required
   />
 </label>
