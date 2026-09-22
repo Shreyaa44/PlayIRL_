@@ -16,6 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 DATA_DIR.mkdir(exist_ok=True)
 DATA_FILE = DATA_DIR / "playirl.json"
+MEMORY_DATA = None
 GITHUB_REPO = os.getenv("GITHUB_REPO", "Shreyaa44/PlayIRL_")
 GITHUB_PATH = os.getenv("GITHUB_DATA_PATH", "backend/data/playirl.json")
 GITHUB_BRANCH = os.getenv("GITHUB_BRANCH", "main")
@@ -171,10 +172,16 @@ DEFAULT_DATA = {"users": [{"id":1,"name":"Aalu","email":"demo@playirl.local","pa
 
 
 def save_data(data):
+    global MEMORY_DATA
     encoded = json.dumps(data, indent=2, ensure_ascii=False).encode("utf-8")
     token = os.getenv("GITHUB_TOKEN")
     if not token:
-        DATA_FILE.write_bytes(encoded)
+        try:
+            DATA_FILE.write_bytes(encoded)
+        except OSError:
+            # Vercel's filesystem is read-only; keep demo submissions alive
+            # for warm serverless instances when no database is configured.
+            MEMORY_DATA = json.loads(encoded.decode("utf-8"))
         return
 
     api_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_PATH}"
@@ -205,6 +212,8 @@ def save_data(data):
 
 
 def load_data():
+    if MEMORY_DATA is not None:
+        return json.loads(json.dumps(MEMORY_DATA))
     token = os.getenv("GITHUB_TOKEN")
     if token:
         api_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_PATH}?ref={GITHUB_BRANCH}"
