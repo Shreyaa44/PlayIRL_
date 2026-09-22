@@ -6,12 +6,19 @@ from datetime import datetime
 from typing import Optional, List
 import hashlib
 import json
+import os
 import secrets
+import base64
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 DATA_DIR.mkdir(exist_ok=True)
 DATA_FILE = DATA_DIR / "playirl.json"
+GITHUB_REPO = os.getenv("GITHUB_REPO", "Shreyaa44/PlayIRL_")
+GITHUB_PATH = os.getenv("GITHUB_DATA_PATH", "backend/data/playirl.json")
+GITHUB_BRANCH = os.getenv("GITHUB_BRANCH", "main")
 
 app = FastAPI(title="PlayIRL API", version="2.0.0")
 app.add_middleware(
@@ -164,10 +171,56 @@ DEFAULT_DATA = {"users": [{"id":1,"name":"Aalu","email":"demo@playirl.local","pa
 
 
 def save_data(data):
-    DATA_FILE.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+    encoded = json.dumps(data, indent=2, ensure_ascii=False).encode("utf-8")
+    token = os.getenv("GITHUB_TOKEN")
+    if not token:
+        DATA_FILE.write_bytes(encoded)
+        return
+
+    api_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_PATH}"
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "Authorization": f"Bearer {token}",
+        "User-Agent": "PlayIRL-api",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+    current_request = Request(f"{api_url}?ref={GITHUB_BRANCH}", headers=headers)
+    try:
+        with urlopen(current_request, timeout=10) as response:
+            current = json.loads(response.read().decode("utf-8"))
+    except (HTTPError, URLError, json.JSONDecodeError) as error:
+        raise RuntimeError("Could not read the production JSON store") from error
+
+    payload = json.dumps({
+        "message": "Update PlayIRL data",
+        "content": base64.b64encode(encoded).decode("ascii"),
+        "sha": current["sha"],
+        "branch": GITHUB_BRANCH,
+    }).encode("utf-8")
+    try:
+        with urlopen(Request(api_url, data=payload, headers={**headers, "Content-Type": "application/json"}, method="PUT"), timeout=10):
+            return
+    except (HTTPError, URLError, KeyError) as error:
+        raise RuntimeError("Could not save the production JSON store") from error
 
 
 def load_data():
+    token = os.getenv("GITHUB_TOKEN")
+    if token:
+        api_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_PATH}?ref={GITHUB_BRANCH}"
+        request = Request(api_url, headers={
+            "Accept": "application/vnd.github+json",
+            "Authorization": f"Bearer {token}",
+            "User-Agent": "PlayIRL-api",
+            "X-GitHub-Api-Version": "2022-11-28",
+        })
+        try:
+            with urlopen(request, timeout=10) as response:
+                remote = json.loads(response.read().decode("utf-8"))
+            return json.loads(base64.b64decode(remote["content"]).decode("utf-8"))
+        except (HTTPError, URLError, json.JSONDecodeError, KeyError, ValueError) as error:
+            raise RuntimeError("Could not read the production JSON store") from error
+
     if not DATA_FILE.exists():
         save_data(DEFAULT_DATA)
     try:
